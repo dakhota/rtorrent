@@ -384,6 +384,9 @@ DownloadList::resume(Download* download, int flags) {
       rpc::call_command("d.up.choke_heuristics.set",   choke_up, rpc::make_target(download));
       rpc::call_command("d.down.choke_heuristics.set", choke_down, rpc::make_target(download));
 
+      rpc::call_command("d.disconnect.seeders", torrent::Object(), rpc::make_target(download));
+      rpc::call_command("d.accepting_seeders.disable", torrent::Object(), rpc::make_target(download));
+
     } else {
       torrent::Object conn_current = rpc::call_command("d.connection_leech", torrent::Object(), rpc::make_target(download));
       torrent::Object choke_up     = rpc::call_command("d.up.choke_heuristics.leech", torrent::Object(), rpc::make_target(download));
@@ -396,6 +399,8 @@ DownloadList::resume(Download* download, int flags) {
       rpc::call_command("d.connection_current.set",    conn_current, rpc::make_target(download));
       rpc::call_command("d.up.choke_heuristics.set",   choke_up, rpc::make_target(download));
       rpc::call_command("d.down.choke_heuristics.set", choke_down, rpc::make_target(download));
+
+      rpc::call_command("d.accepting_seeders.enable", torrent::Object(), rpc::make_target(download));
 
       // For the moment, clear the resume data so we force hash-check
       // on non-complete downloads after a crash. This shouldn't be

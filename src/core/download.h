@@ -78,7 +78,8 @@ public:
 
   bool                is_open() const                          { return m_download.info()->is_open(); }
   bool                is_active() const                        { return m_download.info()->is_active(); }
-  bool                is_done() const                          { return m_download.file_list()->is_done(); }
+  // bool                is_done() const                          { return m_download.file_list()->is_done(); }
+  bool                is_done() const                          { return m_download.data()->is_partially_done(); }
   bool                is_downloading() const                   { return is_active() && !is_done(); }
   bool                is_seeding() const                       { return is_active() && is_done(); }
 
